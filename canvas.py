@@ -1,5 +1,4 @@
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QColor, QKeySequence, QPen, QPixmap
 from PySide6.QtWidgets import (
     QFileDialog,
     QGraphicsScene,
@@ -12,6 +11,7 @@ from PySide6.QtGui import (
     QPen,
     QPixmap,
     QShortcut,
+    QTransform,
 )
 
 from models import Point
@@ -37,6 +37,11 @@ class Canvas(QGraphicsView):
 
         self.setRenderHints(self.renderHints())
         self.setMouseTracking(True)
+        self.setAlignment(Qt.AlignCenter)
+        self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.setTransformationAnchor(QGraphicsView.AnchorViewCenter)
+        self.setResizeAnchor(QGraphicsView.AnchorViewCenter)
 
         QShortcut(QKeySequence("Ctrl+S"), self, self.save_project)
 
@@ -57,18 +62,25 @@ class Canvas(QGraphicsView):
         self.next_id = 1
 
         self.setSceneRect(pixmap.rect())
-        self.resize(
-            self.image_width + 2,
-            self.image_height + 2
-        )
+        self.update_scale()
 
 
     def mousePressEvent(self, event):
+        if not self.image_path:
+            return
 
         pos = self.mapToScene(event.position().toPoint())
 
         x = int(pos.x())
         y = int(pos.y())
+
+        if (
+            x < 0 or
+            y < 0 or
+            x >= self.image_width or
+            y >= self.image_height
+        ):
+            return
 
         if event.button() == Qt.LeftButton:
 
@@ -109,6 +121,8 @@ class Canvas(QGraphicsView):
 
 
     def redraw(self):
+        if not self.image_path:
+            return
 
         pixmap = QPixmap(self.image_path)
 
@@ -118,8 +132,13 @@ class Canvas(QGraphicsView):
         for point in self.points:
             self.draw_point(point)
 
+        self.update_scale()
+
 
     def save_project(self):
+        if not self.image_path:
+            return
+
 
         filename, _ = QFileDialog.getSaveFileName(
             self,
@@ -144,3 +163,28 @@ class Canvas(QGraphicsView):
         }
 
         save_project(project, filename)
+
+
+    def update_scale(self):
+        if not self.image_path:
+            return
+
+        scene = self.sceneRect()
+
+        if scene.isEmpty():
+            return
+
+        viewport = self.viewport().rect()
+
+        scale = min(
+            viewport.width() / scene.width(),
+            viewport.height() / scene.height()
+        )
+
+        self.setTransform(QTransform())
+        self.scale(scale, scale)
+
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self.update_scale()

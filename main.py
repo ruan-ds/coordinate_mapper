@@ -1,33 +1,17 @@
 import sys
 
-from PySide6.QtWidgets import (
-    QApplication,
-    QFileDialog
-)
+from PySide6.QtWidgets import QApplication
 
-from canvas import Canvas
+from window import MainWindow
 
 
 def main():
 
     app = QApplication(sys.argv)
 
-    canvas = Canvas()
-
-    image_path, _ = QFileDialog.getOpenFileName(
-        None,
-        "Abrir imagem",
-        "",
-        "Imagens (*.png *.jpg *.jpeg *.bmp)"
-    )
-
-    if not image_path:
-        sys.exit(0)
-
-    canvas.load_image(image_path)
-
-    canvas.setWindowTitle("Coordinate Mapper")
-    canvas.show()
+    window = MainWindow()
+    window.resize(1200, 800)
+    window.show()
 
     sys.exit(app.exec())
 
