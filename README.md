@@ -50,7 +50,7 @@ uv sync
 3. Execute a aplicação:
 
 ```bash
-uv run python main.py
+uv run coordinate_mapper
 ```
 
 ## Fluxo de uso
