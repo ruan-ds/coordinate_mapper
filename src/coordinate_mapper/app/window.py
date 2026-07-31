@@ -50,8 +50,9 @@ class MainWindow(QMainWindow):
 
         help_label.setToolTip(
             "Clique esquerdo: Adiciona ponto\n"
-            "Clique direito: Remove último ponto\n"
-            "Ctrl+S: Salva o projeto"
+            "Clique direito sobre ponto: Abre menu do ponto\n"
+            "Ctrl+S: Salva o projeto\n"
+            "Ctrl+Z: Desfaz última inserção de ponto "
         )
 
         top_layout.addWidget(self.load_button)

@@ -2,6 +2,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QGraphicsScene,
     QGraphicsView,
+    QMenu,
 )
 
 from PySide6.QtGui import (
@@ -13,7 +14,7 @@ from PySide6.QtGui import (
     QTransform,
 )
 
-from coordinate_mapper.features.annotation.models import Point
+from coordinate_mapper.features.annotation.manager import AnnotationManager
 from coordinate_mapper.features.project.storage import save_project
 
 from PySide6.QtWidgets import QFileDialog
@@ -26,14 +27,12 @@ class Canvas(QGraphicsView):
         self.scene = QGraphicsScene(self)
         self.setScene(self.scene)
 
-        self.points = []
+        self.annotation = AnnotationManager()
 
         self.image_path = None
         self.image_width = 0
         self.image_height = 0
 
-        self.current_group = "default"
-        self.next_id = 1
 
         self.setMouseTracking(True)
         self.setAlignment(Qt.AlignCenter)
@@ -48,6 +47,8 @@ class Canvas(QGraphicsView):
 
         QShortcut(QKeySequence("Ctrl+S"), self, self.save_project)
 
+        QShortcut(QKeySequence("Ctrl+Z"), self, self.undo)
+
     def load_image(self, path):
 
         pixmap = QPixmap(path)
@@ -60,8 +61,7 @@ class Canvas(QGraphicsView):
         self.image_width = pixmap.width()
         self.image_height = pixmap.height()
 
-        self.points.clear()
-        self.next_id = 1
+        self.annotation.clear()
 
         self.setSceneRect(pixmap.rect())
 
@@ -81,19 +81,22 @@ class Canvas(QGraphicsView):
             return
 
         if event.button() == Qt.LeftButton:
-            point = Point(id=self.next_id, x=x, y=y, group=self.current_group)
-
-            self.points.append(point)
-
-            self.next_id += 1
+            point = self.annotation.add_point(x, y)
 
             self.draw_point(point)
 
         elif event.button() == Qt.RightButton:
-            if self.points:
-                self.points.pop()
+            item = self.itemAt(
+                event.position().toPoint()
+            )
 
-                self.redraw()
+            if item:
+
+                point = item.data(0)
+
+                if point:
+                    self.show_point_menu(point)
+                    return
 
     def draw_point(self, point):
 
@@ -101,9 +104,15 @@ class Canvas(QGraphicsView):
 
         pen = QPen(QColor("red"))
 
-        self.scene.addEllipse(
-            point.x - radius, point.y - radius, radius * 2, radius * 2, pen
+        item = self.scene.addEllipse(
+            point.x - radius,
+            point.y - radius,
+            radius * 2,
+            radius * 2,
+            pen
         )
+
+        item.setData(0, point)
 
     def redraw(self):
 
@@ -113,7 +122,7 @@ class Canvas(QGraphicsView):
 
         self.scene.addPixmap(pixmap)
 
-        for point in self.points:
+        for point in self.annotation.get_points():
             self.draw_point(point)
 
         self.update_scale()
@@ -136,7 +145,10 @@ class Canvas(QGraphicsView):
                 "width": self.image_width,
                 "height": self.image_height,
             },
-            "points": [point.to_dict() for point in self.points],
+            "points": [
+                point.to_dict()
+                for point in self.annotation.get_points()
+            ],
         }
 
         save_project(project, filename)
@@ -163,3 +175,30 @@ class Canvas(QGraphicsView):
         super().resizeEvent(event)
 
         self.update_scale()
+
+
+    def show_point_menu(self, point):
+
+        menu = QMenu(self)
+
+        delete_action = menu.addAction(
+            "Excluir ponto"
+        )
+
+        action = menu.exec(
+            self.cursor().pos()
+        )
+
+        if action == delete_action:
+
+            self.annotation.remove(point)
+
+            self.redraw()
+
+
+    def undo(self):
+
+        removed = self.annotation.remove_last()
+
+        if removed:
+            self.redraw()
