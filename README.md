@@ -17,41 +17,40 @@ A arquitetura foi organizada em módulos independentes para facilitar manutenç�
 
 - Interface desktop com PySide6
 - Marcação de pontos em coordenadas absolutas
-- Armazenamento de metadata da imagem (caminho, largura e altura)
+- Armazenamento de metadados da imagem (caminho, largura e altura)
 - Exportação para JSON estruturado
 - Estrutura modular para expansão futura
 
 ## Estrutura do projeto
 
 - main.py: ponto de entrada da aplicação
-- canvas.py: lógica da interface e interação com a imagem
-- models.py: modelo de dados para os pontos
-- storage.py: persistência em disco em formato JSON
+- src/coordinate_mapper/: pacote principal do projeto
+- docs/adr/: registros de decisões de arquitetura
+- tests/: testes automatizados
 
 ## Requisitos
 
 - Python 3.11+
-- PySide6
+- uv
 
 ## Como executar
 
-1. Crie e ative um ambiente virtual:
+1. Instale o uv, se ainda não estiver disponível:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+pip install uv
 ```
 
-2. Instale as dependências:
+2. Crie e sincronize o ambiente do projeto:
 
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
 3. Execute a aplicação:
 
 ```bash
-python main.py
+uv run python main.py
 ```
 
 ## Fluxo de uso
