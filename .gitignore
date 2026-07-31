@@ -2,6 +2,7 @@
 *.env
 *.venv
 *.geany
+.python-version
 
 # Database
 *.db
