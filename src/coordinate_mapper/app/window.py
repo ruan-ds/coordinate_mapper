@@ -8,7 +8,7 @@ from PySide6.QtWidgets import (
     QFileDialog,
 )
 
-from canvas import Canvas
+from coordinate_mapper.features.canvas.canvas import Canvas
 
 
 class MainWindow(QMainWindow):
@@ -18,29 +18,24 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Coordinate Mapper")
         self.setMinimumSize(1000, 700)
 
+        self.canvas = Canvas()
+
         self.setup_ui()
 
-
     def setup_ui(self):
+
         central = QWidget()
         self.setCentralWidget(central)
 
         layout = QVBoxLayout(central)
 
-        # Canvas primeiro
-        self.canvas = Canvas()
-
-
-        # Barra superior
         top_layout = QHBoxLayout()
 
         self.load_button = QPushButton("Carregar imagem")
         self.load_button.clicked.connect(self.load_image)
 
         self.save_button = QPushButton("Salvar projeto")
-        self.save_button.clicked.connect(
-            self.canvas.save_project
-        )
+        self.save_button.clicked.connect(self.canvas.save_project)
 
         help_label = QLabel("?")
 
@@ -64,18 +59,13 @@ class MainWindow(QMainWindow):
         top_layout.addStretch()
         top_layout.addWidget(help_label)
 
-
         layout.addLayout(top_layout)
-
         layout.addWidget(self.canvas)
 
-
     def load_image(self):
+
         filename, _ = QFileDialog.getOpenFileName(
-            self,
-            "Abrir imagem",
-            "",
-            "Imagens (*.png *.jpg *.jpeg *.bmp)"
+            self, "Abrir imagem", "", "Imagens (*.png *.jpg *.jpeg *.bmp)"
         )
 
         if filename:

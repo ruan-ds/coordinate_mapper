@@ -9,10 +9,11 @@ authors = [
 requires-python = ">=3.11"
 dependencies = [
     "pyside6>=6.11.1",
+    "ruff>=0.16.1",
 ]
 
 [project.scripts]
-coordinate-mapper = "coordinate_mapper:main"
+coordinate_mapper = "coordinate_mapper.main:main"
 
 [build-system]
 requires = ["uv_build>=0.12.0,<0.13.0"]

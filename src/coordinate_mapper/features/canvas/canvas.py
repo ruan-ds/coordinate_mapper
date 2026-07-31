@@ -1,6 +1,5 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
-    QFileDialog,
     QGraphicsScene,
     QGraphicsView,
 )
@@ -14,12 +13,13 @@ from PySide6.QtGui import (
     QTransform,
 )
 
-from models import Point
-from storage import save_project
+from coordinate_mapper.features.annotation.models import Point
+from coordinate_mapper.features.project.storage import save_project
+
+from PySide6.QtWidgets import QFileDialog
 
 
 class Canvas(QGraphicsView):
-
     def __init__(self):
         super().__init__()
 
@@ -35,18 +35,20 @@ class Canvas(QGraphicsView):
         self.current_group = "default"
         self.next_id = 1
 
-        self.setRenderHints(self.renderHints())
         self.setMouseTracking(True)
         self.setAlignment(Qt.AlignCenter)
+
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+
         self.setTransformationAnchor(QGraphicsView.AnchorViewCenter)
+
         self.setResizeAnchor(QGraphicsView.AnchorViewCenter)
 
         QShortcut(QKeySequence("Ctrl+S"), self, self.save_project)
 
-
-    def load_image(self, path: str):
+    def load_image(self, path):
 
         pixmap = QPixmap(path)
 
@@ -62,10 +64,11 @@ class Canvas(QGraphicsView):
         self.next_id = 1
 
         self.setSceneRect(pixmap.rect())
+
         self.update_scale()
 
-
     def mousePressEvent(self, event):
+
         if not self.image_path:
             return
 
@@ -74,59 +77,40 @@ class Canvas(QGraphicsView):
         x = int(pos.x())
         y = int(pos.y())
 
-        if (
-            x < 0 or
-            y < 0 or
-            x >= self.image_width or
-            y >= self.image_height
-        ):
+        if x < 0 or y < 0 or x >= self.image_width or y >= self.image_height:
             return
 
         if event.button() == Qt.LeftButton:
-
-            point = Point(
-                id=self.next_id,
-                x=x,
-                y=y,
-                group=self.current_group
-            )
+            point = Point(id=self.next_id, x=x, y=y, group=self.current_group)
 
             self.points.append(point)
+
             self.next_id += 1
 
             self.draw_point(point)
 
         elif event.button() == Qt.RightButton:
-
             if self.points:
                 self.points.pop()
+
                 self.redraw()
 
-        super().mousePressEvent(event)
-
-
-    def draw_point(self, point: Point):
+    def draw_point(self, point):
 
         radius = 4
 
         pen = QPen(QColor("red"))
 
         self.scene.addEllipse(
-            point.x - radius,
-            point.y - radius,
-            radius * 2,
-            radius * 2,
-            pen
+            point.x - radius, point.y - radius, radius * 2, radius * 2, pen
         )
 
-
     def redraw(self):
-        if not self.image_path:
-            return
 
         pixmap = QPixmap(self.image_path)
 
         self.scene.clear()
+
         self.scene.addPixmap(pixmap)
 
         for point in self.points:
@@ -134,17 +118,13 @@ class Canvas(QGraphicsView):
 
         self.update_scale()
 
-
     def save_project(self):
+
         if not self.image_path:
             return
 
-
         filename, _ = QFileDialog.getSaveFileName(
-            self,
-            "Salvar projeto",
-            "points.json",
-            "JSON (*.json)"
+            self, "Salvar projeto", "points.json", "JSON (*.json)"
         )
 
         if not filename:
@@ -156,18 +136,12 @@ class Canvas(QGraphicsView):
                 "width": self.image_width,
                 "height": self.image_height,
             },
-            "points": [
-                point.to_dict()
-                for point in self.points
-            ]
+            "points": [point.to_dict() for point in self.points],
         }
 
         save_project(project, filename)
 
-
     def update_scale(self):
-        if not self.image_path:
-            return
 
         scene = self.sceneRect()
 
@@ -177,14 +151,15 @@ class Canvas(QGraphicsView):
         viewport = self.viewport().rect()
 
         scale = min(
-            viewport.width() / scene.width(),
-            viewport.height() / scene.height()
+            viewport.width() / scene.width(), viewport.height() / scene.height()
         )
 
         self.setTransform(QTransform())
+
         self.scale(scale, scale)
 
-
     def resizeEvent(self, event):
+
         super().resizeEvent(event)
+
         self.update_scale()

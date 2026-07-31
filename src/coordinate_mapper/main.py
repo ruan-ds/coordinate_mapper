@@ -2,7 +2,7 @@ import sys
 
 from PySide6.QtWidgets import QApplication
 
-from window import MainWindow
+from coordinate_mapper.app.window import MainWindow
 
 
 def main():
