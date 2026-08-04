@@ -15,6 +15,7 @@ from PySide6.QtGui import (
 
 from coordinate_mapper.features.annotation.manager import AnnotationManager
 from coordinate_mapper.features.canvas.drawing import CanvasDrawingMixin
+from coordinate_mapper.features.canvas.events import CanvasEventsMixin
 from coordinate_mapper.features.canvas.menu import CanvasMenuMixin
 from coordinate_mapper.features.canvas.viewport import CanvasViewportMixin
 from coordinate_mapper.features.project.storage import save_project
@@ -22,6 +23,7 @@ from coordinate_mapper.features.project.storage import save_project
 
 class Canvas(
     CanvasDrawingMixin,
+    CanvasEventsMixin,
     CanvasMenuMixin,
     CanvasViewportMixin,
     QGraphicsView
@@ -65,36 +67,6 @@ class Canvas(
 
         self.draw_image()
         self.update_scale()
-
-    def mousePressEvent(self, event):
-
-        if not self.image_path:
-            return
-
-        pos = self.mapToScene(event.position().toPoint())
-
-        x = int(pos.x())
-        y = int(pos.y())
-
-        if x < 0 or y < 0 or x >= self.image_width or y >= self.image_height:
-            return
-
-        if event.button() == Qt.LeftButton:
-
-            point = self.annotation.add_point(x, y)
-
-            self.draw_point(point)
-
-        elif event.button() == Qt.RightButton:
-
-            item = self.itemAt(event.position().toPoint())
-
-            if item:
-
-                point = item.data(0)
-
-                if point:
-                    self.show_point_menu(point)
 
     def save_project(self):
 
