@@ -15,10 +15,15 @@ from PySide6.QtGui import (
 
 from coordinate_mapper.features.annotation.manager import AnnotationManager
 from coordinate_mapper.features.canvas.drawing import CanvasDrawingMixin
+from coordinate_mapper.features.canvas.viewport import CanvasViewportMixin
 from coordinate_mapper.features.project.storage import save_project
 
 
-class Canvas(CanvasDrawingMixin, QGraphicsView):
+class Canvas(
+    CanvasDrawingMixin,
+    CanvasViewportMixin,
+    QGraphicsView,
+    ):
     def __init__(self):
         super().__init__()
 
@@ -117,29 +122,6 @@ class Canvas(CanvasDrawingMixin, QGraphicsView):
         }
 
         save_project(project, filename)
-
-    def update_scale(self):
-
-        scene = self.sceneRect()
-
-        if scene.isEmpty():
-            return
-
-        viewport = self.viewport().rect()
-
-        scale = min(
-            viewport.width() / scene.width(),
-            viewport.height() / scene.height(),
-        )
-
-        self.setTransform(QTransform())
-        self.scale(scale, scale)
-
-    def resizeEvent(self, event):
-
-        super().resizeEvent(event)
-
-        self.update_scale()
 
     def show_point_menu(self, point):
 
