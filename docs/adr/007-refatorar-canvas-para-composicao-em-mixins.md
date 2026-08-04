@@ -1,4 +1,4 @@
-# ADR-009: Refatorar o Canvas para composição em mixins especializados
+# ADR-007: Refatorar o Canvas para composição em mixins especializados
 
 - Status: Aceito
 - Data: 2026-08-04
@@ -45,7 +45,7 @@ class Canvas(
 - Melhor manutenção: o `Canvas` deixou de ser um arquivo monolítico e passou a compor comportamentos.
 - Preparação para futuras evoluções: seleção, ferramentas, múltiplos tipos de desenho, histórico de undo/redo mais completo e exportadores.
 
-## Benefícios obtidos
+### Benefícios obtidos
 
 - O `Canvas` agora reúne apenas os mixins e a inicialização do `QGraphicsView`.
 - A renderização ficou isolada em `drawing.py`.
@@ -56,6 +56,10 @@ class Canvas(
 - A persistência do projeto ficou em `project.py`.
 - O controle de visualização e escala ficou em `viewport.py`.
 
-## Conclusão
+### Conclusão
 
 A refatoração tirou do `Canvas` a responsabilidade de implementar diversas funcionalidades e o transformou em um agregador de comportamentos. O resultado é uma base arquitetural mais robusta, mais fácil de entender e mais preparada para crescer.
+
+### Evolução imediata
+
+Com a nova decomposição em mixins, foi possível introduzir um sistema inicial de ferramentas (`ToolManager` e `Tool`s) para controlar modos de interação sem aumentar a complexidade do `Canvas`. O `SelectTool`, que permite selecionar e mover pontos, é a primeira ferramenta implementada aproveitando essa nova estrutura (ver ADR-008).

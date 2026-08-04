@@ -1,4 +1,4 @@
-# ADR-008: Introduzir um gerenciador de anotações para o controle de pontos
+# ADR-006: Introduzir um gerenciador de anotações para o controle de pontos
 
 - Status: Aceito
 - Data: 2026-07-31

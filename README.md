@@ -32,7 +32,11 @@ A arquitetura foi organizada em módulos independentes para facilitar manutenç�
 
 O `Canvas` foi refatorado para funcionar como um agregador de comportamentos, reunindo mixins especializados em vez de centralizar todas as responsabilidades em uma única classe. Essa separação melhora a manutenção e prepara o projeto para evoluir com recursos como seleção, ferramentas e undo/redo mais completos.
 
-Veja a decisão arquitetural em [docs/adr/009-refatorar-canvas-para-composicao-em-mixins.md](docs/adr/009-refatorar-canvas-para-composicao-em-mixins.md).
+Veja a decisão arquitetural em [docs/adr/007-refatorar-canvas-para-composicao-em-mixins.md](docs/adr/007-refatorar-canvas-para-composicao-em-mixins.md).
+
+## Ferramentas e interação
+
+O projeto agora conta com um sistema inicial de ferramentas que controlam modos de interação no `Canvas`. A funcionalidade `SelectTool` foi adicionada para permitir seleção e movimentação direta de pontos por arraste. Consulte a ADR que registra essa implementação em [docs/adr/008-adicionar-selecttool-para-mover-pontos.md](docs/adr/008-adicionar-selecttool-para-mover-pontos.md).
 
 ## Requisitos
 
