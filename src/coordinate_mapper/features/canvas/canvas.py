@@ -22,7 +22,7 @@ from coordinate_mapper.features.canvas.menu import CanvasMenuMixin
 from coordinate_mapper.features.canvas.project import CanvasProjectMixin
 from coordinate_mapper.features.canvas.viewport import CanvasViewportMixin
 from coordinate_mapper.features.project.storage import save_project
-from coordinate_mapper.features.tools.base import ToolManager
+from coordinate_mapper.features.tools.manager import ToolManager
 from coordinate_mapper.features.tools.point import PointTool
 
 
@@ -43,10 +43,7 @@ class Canvas(
         self.setScene(self.scene)
 
         self.annotation = AnnotationManager()
-        self.tools = ToolManager(
-            PointTool()
-        )
-
+        self.tools = ToolManager()
         self.image_path = None
         self.image_width = 0
         self.image_height = 0
@@ -63,3 +60,4 @@ class Canvas(
 
         QShortcut(QKeySequence("Ctrl+S"), self, self.save_project)
         QShortcut(QKeySequence("Ctrl+Z"), self, self.undo)
+        QShortcut(QKeySequence("Ctrl+M"), self, self.tools.toggle_move)

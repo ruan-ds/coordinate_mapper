@@ -1,7 +1,9 @@
 from PySide6.QtCore import Qt
 
+from coordinate_mapper.features.tools.base import BaseTool
 
-class PointTool:
+
+class PointTool(BaseTool):
 
     def mouse_press(self, canvas, event):
 

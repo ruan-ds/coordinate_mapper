@@ -1,3 +1,5 @@
+from email.mime import message
+
 from PySide6.QtWidgets import (
     QMainWindow,
     QWidget,
@@ -8,6 +10,7 @@ from PySide6.QtWidgets import (
     QFileDialog,
 )
 
+from coordinate_mapper.app.widgets.toast import Toast
 from coordinate_mapper.features.canvas.canvas import Canvas
 
 
@@ -19,6 +22,10 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(1000, 700)
 
         self.canvas = Canvas()
+        self.canvas = Canvas()
+        self.toast = Toast(self)
+
+        self.canvas.tools.on_tool_changed = self.show_toast
 
         self.setup_ui()
 
@@ -49,11 +56,17 @@ class MainWindow(QMainWindow):
         """)
 
         help_label.setToolTip(
-            "Clique esquerdo: Adiciona ponto\n"
-            "Clique direito sobre ponto: Abre menu do ponto\n"
-            "Ctrl+S: Salva o projeto\n"
-            "Ctrl+Z: Desfaz última inserção de ponto "
-        )
+    "Ferramentas:\n"
+    "Ctrl+M: Alterna modo movimentação\n"
+    "\n"
+    "Pontos:\n"
+    "Clique esquerdo: Insere ponto\n"
+    "Clique direito sobre ponto: Menu de ações\n"
+    "\n"
+    "Projeto:\n"
+    "Ctrl+S: Salvar projeto\n"
+    "Ctrl+Z: Remover última inserção"
+)
 
         top_layout.addWidget(self.load_button)
         top_layout.addWidget(self.save_button)
@@ -71,3 +84,6 @@ class MainWindow(QMainWindow):
 
         if filename:
             self.canvas.load_image(filename)
+
+    def show_toast(self, message):
+        self.toast.show_message(message)
