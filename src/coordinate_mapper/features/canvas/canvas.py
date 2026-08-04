@@ -15,14 +15,16 @@ from PySide6.QtGui import (
 
 from coordinate_mapper.features.annotation.manager import AnnotationManager
 from coordinate_mapper.features.canvas.drawing import CanvasDrawingMixin
+from coordinate_mapper.features.canvas.menu import CanvasMenuMixin
 from coordinate_mapper.features.canvas.viewport import CanvasViewportMixin
 from coordinate_mapper.features.project.storage import save_project
 
 
 class Canvas(
     CanvasDrawingMixin,
+    CanvasMenuMixin,
     CanvasViewportMixin,
-    QGraphicsView,
+    QGraphicsView
     ):
     def __init__(self):
         super().__init__()
@@ -122,20 +124,6 @@ class Canvas(
         }
 
         save_project(project, filename)
-
-    def show_point_menu(self, point):
-
-        menu = QMenu(self)
-
-        delete_action = menu.addAction("Excluir ponto")
-
-        action = menu.exec(self.cursor().pos())
-
-        if action == delete_action:
-
-            self.annotation.remove(point)
-
-            self.redraw()
 
     def undo(self):
 
