@@ -1,23 +1,24 @@
 # ADR-000: Ideias futuras e TODO
 
-- Status: Proposto
-- Data: 2026-07-28
-
 ## Contexto
 
 O projeto já possui a base funcional, mas continua evoluindo para oferecer uma experiência de uso mais completa e organizada.
 
-## Funcionalidades já implementadas
+### Funcionalidades já implementadas
 
 As seguintes funcionalidades foram incorporadas recentemente ao fluxo principal do projeto:
 
 - exclusão de ponto individual por meio de um menu contextual;
 - suporte inicial a desfazer a última ação com Ctrl+Z;
-- centralização do gerenciamento de pontos em um componente dedicado para melhorar a organização do código.
+- centralização do gerenciamento de pontos em um componente dedicado para melhorar a organização do código;
+- movimentação de pontos via `SelectTool` com arraste e atualização de coordenadas;
 
-Essas mudanças são justificadas e documentadas em [docs/adr/008-introduzir-gerenciador-de-anotacoes.md](docs/adr/008-introduzir-gerenciador-de-anotacoes.md).
+Essas mudanças são justificadas e documentadas em:
 
-## TODO
+- [docs/adr/006-introduzir-gerenciador-de-anotacoes.md](docs/adr/006-introduzir-gerenciador-de-anotacoes.md)
+- [docs/adr/008-adicionar-selecttool-para-mover-pontos.md](docs/adr/008-adicionar-selecttool-para-mover-pontos.md).
+
+### TODO
 
 As próximas melhorias planejadas para o projeto são:
 
@@ -28,12 +29,9 @@ As próximas melhorias planejadas para o projeto são:
 - permitir editar pontos já existentes sem precisar removê-los e recriá-los;
 - manter a separação entre o gerenciamento de pontos e a lógica visual do Canvas para facilitar futuras expansões.
 
-## Referências de implementação
+### Sugestão
 
-Estas ideias serão guiadas pelas ADRs a seguir:
-
-- ADR-006: Adicionar modos de inserção e edição de pontos
-- ADR-007: Introduzir menu contextual e edição de pontos
+Estas melhorias podem ser implementadas de forma incremental, sem comprometer a arquitetura modular atual.
 
 ## Sugestão
 
