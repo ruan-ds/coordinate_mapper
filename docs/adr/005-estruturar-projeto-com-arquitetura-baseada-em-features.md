@@ -19,6 +19,8 @@ A nova organização passou a separar a aplicação em camadas e agrupamentos te
 
 Essa mudança foi adotada com o objetivo de reduzir o acoplamento entre partes do sistema e tornar o projeto mais sustentável a longo prazo.
 
+A refatoração do `Canvas` em mixins especializados é um exemplo dessa estratégia, transformando-o em um agregador de comportamentos enquanto cada funcionalidade passa a residir em um módulo específico.
+
 ## Consequências
 
 - A estrutura do projeto fica mais intuitiva para novos desenvolvedores.

@@ -28,6 +28,12 @@ A arquitetura foi organizada em módulos independentes para facilitar manutenç�
 - docs/adr/: registros de decisões de arquitetura
 - tests/: testes automatizados
 
+## Arquitetura do Canvas
+
+O `Canvas` foi refatorado para funcionar como um agregador de comportamentos, reunindo mixins especializados em vez de centralizar todas as responsabilidades em uma única classe. Essa separação melhora a manutenção e prepara o projeto para evoluir com recursos como seleção, ferramentas e undo/redo mais completos.
+
+Veja a decisão arquitetural em [docs/adr/009-refatorar-canvas-para-composicao-em-mixins.md](docs/adr/009-refatorar-canvas-para-composicao-em-mixins.md).
+
 ## Requisitos
 
 - Python 3.11+
