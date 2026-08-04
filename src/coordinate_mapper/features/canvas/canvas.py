@@ -16,6 +16,7 @@ from PySide6.QtGui import (
 from coordinate_mapper.features.annotation.manager import AnnotationManager
 from coordinate_mapper.features.canvas.drawing import CanvasDrawingMixin
 from coordinate_mapper.features.canvas.events import CanvasEventsMixin
+from coordinate_mapper.features.canvas.commands import CanvasCommandsMixin
 from coordinate_mapper.features.canvas.image import CanvasImageMixin
 from coordinate_mapper.features.canvas.menu import CanvasMenuMixin
 from coordinate_mapper.features.canvas.project import CanvasProjectMixin
@@ -26,6 +27,7 @@ from coordinate_mapper.features.project.storage import save_project
 class Canvas(
     CanvasDrawingMixin,
     CanvasEventsMixin,
+    CanvasCommandsMixin,
     CanvasImageMixin,
     CanvasMenuMixin,
     CanvasProjectMixin,
@@ -56,10 +58,3 @@ class Canvas(
 
         QShortcut(QKeySequence("Ctrl+S"), self, self.save_project)
         QShortcut(QKeySequence("Ctrl+Z"), self, self.undo)
-
-    def undo(self):
-
-        removed = self.annotation.remove_last()
-
-        if removed:
-            self.redraw()
