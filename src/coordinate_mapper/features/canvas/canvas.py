@@ -22,6 +22,8 @@ from coordinate_mapper.features.canvas.menu import CanvasMenuMixin
 from coordinate_mapper.features.canvas.project import CanvasProjectMixin
 from coordinate_mapper.features.canvas.viewport import CanvasViewportMixin
 from coordinate_mapper.features.project.storage import save_project
+from coordinate_mapper.features.tools.base import ToolManager
+from coordinate_mapper.features.tools.point import PointTool
 
 
 class Canvas(
@@ -41,6 +43,9 @@ class Canvas(
         self.setScene(self.scene)
 
         self.annotation = AnnotationManager()
+        self.tools = ToolManager(
+            PointTool()
+        )
 
         self.image_path = None
         self.image_width = 0
