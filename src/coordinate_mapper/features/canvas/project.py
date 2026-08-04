@@ -4,7 +4,6 @@ from coordinate_mapper.features.project.storage import save_project
 
 
 class CanvasProjectMixin:
-
     def save_project(self):
 
         if not self.image_path:
@@ -26,10 +25,7 @@ class CanvasProjectMixin:
                 "width": self.image_width,
                 "height": self.image_height,
             },
-            "points": [
-                point.to_dict()
-                for point in self.annotation.get_points()
-            ],
+            "points": [point.to_dict() for point in self.annotation.get_points()],
         }
 
         save_project(project, filename)

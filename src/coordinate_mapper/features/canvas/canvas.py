@@ -1,29 +1,22 @@
 from PySide6.QtCore import Qt
+from PySide6.QtGui import (
+    QKeySequence,
+    QShortcut,
+)
 from PySide6.QtWidgets import (
     QGraphicsScene,
     QGraphicsView,
-    QMenu,
-    QFileDialog,
-)
-
-from PySide6.QtGui import (
-    QKeySequence,
-    QPixmap,
-    QShortcut,
-    QTransform,
 )
 
 from coordinate_mapper.features.annotation.manager import AnnotationManager
+from coordinate_mapper.features.canvas.commands import CanvasCommandsMixin
 from coordinate_mapper.features.canvas.drawing import CanvasDrawingMixin
 from coordinate_mapper.features.canvas.events import CanvasEventsMixin
-from coordinate_mapper.features.canvas.commands import CanvasCommandsMixin
 from coordinate_mapper.features.canvas.image import CanvasImageMixin
 from coordinate_mapper.features.canvas.menu import CanvasMenuMixin
 from coordinate_mapper.features.canvas.project import CanvasProjectMixin
 from coordinate_mapper.features.canvas.viewport import CanvasViewportMixin
-from coordinate_mapper.features.project.storage import save_project
 from coordinate_mapper.features.tools.manager import ToolManager
-from coordinate_mapper.features.tools.point import PointTool
 
 
 class Canvas(
@@ -34,8 +27,8 @@ class Canvas(
     CanvasMenuMixin,
     CanvasProjectMixin,
     CanvasViewportMixin,
-    QGraphicsView
-    ):
+    QGraphicsView,
+):
     def __init__(self):
         super().__init__()
 

@@ -1,13 +1,11 @@
-from email.mime import message
-
 from PySide6.QtWidgets import (
-    QMainWindow,
-    QWidget,
-    QVBoxLayout,
-    QHBoxLayout,
-    QPushButton,
-    QLabel,
     QFileDialog,
+    QHBoxLayout,
+    QLabel,
+    QMainWindow,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
 )
 
 from coordinate_mapper.app.widgets.toast import Toast
@@ -56,17 +54,17 @@ class MainWindow(QMainWindow):
         """)
 
         help_label.setToolTip(
-    "Ferramentas:\n"
-    "Ctrl+M: Alterna modo movimentação\n"
-    "\n"
-    "Pontos:\n"
-    "Clique esquerdo: Insere ponto\n"
-    "Clique direito sobre ponto: Menu de ações\n"
-    "\n"
-    "Projeto:\n"
-    "Ctrl+S: Salvar projeto\n"
-    "Ctrl+Z: Remover última inserção"
-)
+            "Ferramentas:\n"
+            "Ctrl+M: Alterna modo movimentação\n"
+            "\n"
+            "Pontos:\n"
+            "Clique esquerdo: Insere ponto\n"
+            "Clique direito sobre ponto: Menu de ações\n"
+            "\n"
+            "Projeto:\n"
+            "Ctrl+S: Salvar projeto\n"
+            "Ctrl+Z: Remover última inserção"
+        )
 
         top_layout.addWidget(self.load_button)
         top_layout.addWidget(self.save_button)

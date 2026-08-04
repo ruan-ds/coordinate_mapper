@@ -2,17 +2,13 @@ from coordinate_mapper.features.tools.base import BaseTool
 
 
 class SelectTool(BaseTool):
-
     def __init__(self):
         self.selected_point = None
         self.dragging = False
 
-
     def mouse_press(self, canvas, event):
 
-        item = canvas.itemAt(
-            event.position().toPoint()
-        )
+        item = canvas.itemAt(event.position().toPoint())
 
         if not item:
             return
@@ -23,7 +19,6 @@ class SelectTool(BaseTool):
             self.selected_point = point
             self.dragging = True
 
-
     def mouse_move(self, canvas, event):
 
         if not self.dragging:
@@ -32,9 +27,7 @@ class SelectTool(BaseTool):
         if not self.selected_point:
             return
 
-        pos = canvas.mapToScene(
-            event.position().toPoint()
-        )
+        pos = canvas.mapToScene(event.position().toPoint())
 
         x = int(pos.x())
         y = int(pos.y())
@@ -52,7 +45,6 @@ class SelectTool(BaseTool):
         self.selected_point.y = y
 
         canvas.redraw()
-
 
     def mouse_release(self, canvas, event):
 

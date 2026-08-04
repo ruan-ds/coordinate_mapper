@@ -2,7 +2,6 @@ from PySide6.QtGui import QColor, QPen, QPixmap
 
 
 class CanvasDrawingMixin:
-
     def draw_point(self, point):
 
         radius = 4
@@ -10,17 +9,12 @@ class CanvasDrawingMixin:
         pen = QPen(QColor("red"))
 
         item = self.scene.addEllipse(
-            point.x - radius,
-            point.y - radius,
-            radius * 2,
-            radius * 2,
-            pen
+            point.x - radius, point.y - radius, radius * 2, radius * 2, pen
         )
 
         item.setData(0, point)
 
         return item
-
 
     def draw_image(self):
 
@@ -29,7 +23,6 @@ class CanvasDrawingMixin:
         self.scene.clear()
 
         self.scene.addPixmap(pixmap)
-
 
     def redraw(self):
 

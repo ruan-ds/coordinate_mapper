@@ -1,23 +1,20 @@
 from PySide6.QtCore import (
+    QPropertyAnimation,
     Qt,
     QTimer,
-    QPropertyAnimation,
 )
 from PySide6.QtWidgets import (
-    QLabel,
     QGraphicsOpacityEffect,
+    QLabel,
 )
 
 
 class Toast(QLabel):
-
     def __init__(self, parent=None):
 
         super().__init__(parent)
 
-        self.setWindowFlags(
-            Qt.ToolTip
-        )
+        self.setWindowFlags(Qt.ToolTip)
 
         self.setStyleSheet("""
             QLabel {
@@ -30,16 +27,11 @@ class Toast(QLabel):
             }
         """)
 
-        self.effect = QGraphicsOpacityEffect(
-            self
-        )
+        self.effect = QGraphicsOpacityEffect(self)
 
-        self.setGraphicsEffect(
-            self.effect
-        )
+        self.setGraphicsEffect(self.effect)
 
         self.animation = None
-
 
     def show_message(self, text, duration=2000):
 
@@ -50,10 +42,7 @@ class Toast(QLabel):
 
         parent = self.parent()
 
-        x = (
-            parent.width()
-            - self.width()
-        ) // 2
+        x = (parent.width() - self.width()) // 2
 
         y = 40
 
@@ -61,26 +50,17 @@ class Toast(QLabel):
 
         self.show()
 
-        QTimer.singleShot(
-            duration,
-            self.fade_out
-        )
-
+        QTimer.singleShot(duration, self.fade_out)
 
     def fade_out(self):
 
-        self.animation = QPropertyAnimation(
-            self.effect,
-            b"opacity"
-        )
+        self.animation = QPropertyAnimation(self.effect, b"opacity")
 
         self.animation.setDuration(500)
 
         self.animation.setStartValue(1)
         self.animation.setEndValue(0)
 
-        self.animation.finished.connect(
-            self.hide
-        )
+        self.animation.finished.connect(self.hide)
 
         self.animation.start()

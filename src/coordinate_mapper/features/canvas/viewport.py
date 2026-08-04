@@ -2,7 +2,6 @@ from PySide6.QtGui import QTransform
 
 
 class CanvasViewportMixin:
-
     def update_scale(self):
 
         scene = self.sceneRect()

@@ -2,7 +2,6 @@ from PySide6.QtGui import QPixmap
 
 
 class CanvasImageMixin:
-
     def load_image(self, path):
 
         self.pixmap = QPixmap(path)
