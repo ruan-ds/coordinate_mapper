@@ -36,7 +36,13 @@ Veja a decisão arquitetural em [docs/adr/007-refatorar-canvas-para-composicao-e
 
 ## Ferramentas e interação
 
-O projeto agora conta com um sistema inicial de ferramentas que controlam modos de interação no `Canvas`. A funcionalidade `SelectTool` foi adicionada para permitir seleção e movimentação direta de pontos por arraste. Consulte a ADR que registra essa implementação em [docs/adr/008-adicionar-selecttool-para-mover-pontos.md](docs/adr/008-adicionar-selecttool-para-mover-pontos.md).
+O projeto agora conta com um sistema inicial de ferramentas que controlam modos de interação no `Canvas`. A funcionalidade `SelectTool` foi adicionada para permitir seleção e movimentação direta de pontos por arraste. Também foi implementado o `VertexTool`, permitindo criar sequências interpoladas entre dois pontos com configuração de densidade.
+
+Consulte as decisões em:
+
+- [docs/adr/008-adicionar-selecttool-para-mover-pontos.md](docs/adr/008-adicionar-selecttool-para-mover-pontos.md)
+- [docs/adr/009-adicionar-vertextool-para-criacao-de-vertices.md](docs/adr/009-adicionar-vertextool-para-criacao-de-vertices.md)
+- [docs/adr/010-regras-de-escrita-de-ADRs.md](docs/adr/010-regras-de-escrita-de-ADRs.md)
 
 ## Requisitos
 
