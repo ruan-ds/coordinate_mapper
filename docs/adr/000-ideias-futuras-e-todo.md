@@ -8,10 +8,24 @@ O projeto já possui a base funcional, mas continua evoluindo para oferecer uma 
 
 As seguintes funcionalidades foram incorporadas recentemente ao fluxo principal do projeto:
 
+#### Exclusão de ponto individual
+
 - exclusão de ponto individual por meio de um menu contextual;
-- suporte inicial a desfazer a última ação com Ctrl+Z;
+
+#### Undo inicial com Ctrl+Z
+
+- suporte inicial a desfazer a última inserção de ponto único com Ctrl+Z;
+
+#### Gerenciamento de pontos separado
+
 - centralização do gerenciamento de pontos em um componente dedicado para melhorar a organização do código;
+
+#### Movimentação de pontos com SelectTool
+
 - movimentação de pontos via `SelectTool` com arraste e atualização de coordenadas;
+
+#### Criação de vértices com VertexTool
+
 - criação de vértices com `VertexTool`, interpolação de pontos e ajuste de densidade.
 
 Essas mudanças são justificadas e documentadas em:
@@ -24,6 +38,17 @@ Essas mudanças são justificadas e documentadas em:
 
 As próximas melhorias planejadas para o projeto são:
 
+#### Reestruturar o sistema de Undo/Redo
+
+- substituir o comportamento atual de "remover último ponto" por um histórico real de ações (`Command Pattern`), permitindo desfazer/refazer criação, exclusão, movimentação e edição de vértices.
+
+#### Implementar persistência de projetos
+
+- salvar e carregar anotações (pontos, grupos, vértices, configurações e metadados da imagem) em um formato próprio, permitindo continuar trabalhos posteriormente.
+
+#### Melhorar a edição de vértices existentes
+
+- permitir movimentação dos pontos base do vértice (início/fim) e regeneração automática da interpolação mantendo quantidade e densidade configuradas.
 
 ### Sugestão
 

@@ -15,7 +15,7 @@ Definir regras fixas para a escrita de ADRs neste repositório:
 - O documento deve começar com um título único em `#`.
 - Usar apenas os cabeçalhos `##` para as seções principais: `Contexto`, `Decisão` e `Consequências`.
 - Usar `###` apenas para subtópicos dentro dessas seções.
-- Não usar `####` ou níveis adicionais sem necessidade clara.
+- Evitar `####` ou níveis adicionais em ADRs normais, mas permitir `####` no `ADR-000: Ideias futuras e TODO` para títulos de funcionalidades já implementadas ou sugeridas.
 - Registrar somente informações técnicas de mudança e motivação, evitando linguagem de tutorial ou fluxo de usuário passo a passo.
 - Incluir, quando apropriado, referências a arquivos de código implementados e outras ADRs relacionadas.
 - Manter o estilo conciso e orientado a decisão: `por quê`, `o que mudou`, `impacto`.
