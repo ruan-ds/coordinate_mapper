@@ -54,3 +54,4 @@ class Canvas(
         QShortcut(QKeySequence("Ctrl+S"), self, self.save_project)
         QShortcut(QKeySequence("Ctrl+Z"), self, self.undo)
         QShortcut(QKeySequence("Ctrl+M"), self, self.tools.toggle_move)
+        QShortcut(QKeySequence("Ctrl+V"), self, self.tools.toggle_vertex)

@@ -7,3 +7,6 @@ class BaseTool:
 
     def mouse_release(self, canvas, event):
         pass
+
+    def reset(self, canvas=None):
+        pass
